@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
-import { useUser } from '../context/UserContext';
+
 import { Usuario } from '../models/Usuario';
 import { userService } from '../services/userService';
 
@@ -10,7 +10,7 @@ import { userService } from '../services/userService';
 export function LoginViewModel() {
   const [user, setUserInput] = useState('');
   const router = useRouter();
-  const { setUser } = useUser();
+ 
 
   const iniciarSesion = async () => {
     const nombreIngresado = user.trim().toLowerCase();
@@ -27,8 +27,8 @@ export function LoginViewModel() {
       );
 
       if (existe) {
-        setUser(nombreIngresado);
-        router.replace('/(tabs)/home');
+        
+        router.replace('./screens/HomeScreen'); // Redirige al HomeScreen
       } else {
         Alert.alert('Error', 'Usuario no encontrado');
       }
