@@ -2,18 +2,17 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
+import { useUser } from '../../context/UserContext';
 import { Usuario } from '../models/Usuario';
 import { userService } from '../services/userService';
 
-
-
 export function LoginViewModel() {
-  const [user, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState('');
   const router = useRouter();
- 
+  const { setUser } = useUser();
 
   const iniciarSesion = async () => {
-    const nombreIngresado = user.trim().toLowerCase();
+    const nombreIngresado = userInput.trim().toLowerCase();
 
     if (!nombreIngresado) {
       Alert.alert('Campo vacío', 'Ingrese su nombre de usuario');
@@ -22,13 +21,13 @@ export function LoginViewModel() {
 
     try {
       const usuarios = await userService.getUsers();
-      const existe = usuarios.some(
+      const usuarioEncontrado = usuarios.find(
         (u: Usuario) => u.nombre.trim().toLowerCase() === nombreIngresado
       );
 
-      if (existe) {
-        
-        router.replace('./screens/HomeScreen'); // Redirige al HomeScreen
+      if (usuarioEncontrado) {
+        setUser(usuarioEncontrado.nombre); // o setUser(usuarioEncontrado)
+        router.replace('./HomeScreen');
       } else {
         Alert.alert('Error', 'Usuario no encontrado');
       }
@@ -39,8 +38,8 @@ export function LoginViewModel() {
   };
 
   return {
-    username:user,
-    setUsername:setUserInput,
+    username: userInput,
+    setUsername: setUserInput,
     iniciarSesion,
   };
 }
