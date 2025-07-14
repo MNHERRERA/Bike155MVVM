@@ -28,7 +28,7 @@ export default function LoginScreen() {
 
       <TouchableOpacity
         style={[styles.button, styles.secondaryButton]}
-        onPress={() => router.push('/screens/RegistrarUsuario')}
+        onPress={() => router.push('/RegistrarUsuario')}
       >
         <Text style={styles.buttonText}>Registrar Usuario</Text>
       </TouchableOpacity>

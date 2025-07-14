@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../context/UserContext';
 import { Usuario } from '../models/Usuario';
 import { userService } from '../services/userService';
 

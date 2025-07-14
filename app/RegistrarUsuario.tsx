@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-// Update the import path and extension if needed
+
 import { loginStyles as styles } from '../styles/loginStyles';
 import RegistrarViewModel from '../viewmodels/RegistrarViewModel';
 
@@ -36,7 +36,7 @@ export default function RegistrarUsuario() {
 
       <TouchableOpacity
         style={[styles.button, styles.secondaryButton]}
-        onPress={() => router.push('/screens/loginScreen')}
+        onPress={() => router.push('/loginScreen')}
       >
         <Text style={styles.buttonText}>Volver a Iniciar Sesión</Text>
       </TouchableOpacity>
