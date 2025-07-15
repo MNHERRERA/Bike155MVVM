@@ -5,7 +5,8 @@ import { Alert } from 'react-native';
 import { api } from '../services/api';
 
 export function useCrearRutaViewModel() {
-  const [ubicacion, setUbicacion] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [tipoBike, setTipoBike] = useState('');
   const [fecha] = useState(new Date().toISOString());
   const [latitud, setLatitud] = useState<number | null>(null);
   const [longitud, setLongitud] = useState<number | null>(null);
@@ -23,22 +24,23 @@ export function useCrearRutaViewModel() {
   };
 
   const crearRuta = async () => {
-    if (!ubicacion.trim() || !latitud || !longitud) {
-      Alert.alert('Error', 'Completa la ubicación y obtén coordenadas.');
+    if (!descripcion.trim() || !tipoBike.trim() || latitud === null || longitud === null) {
+      Alert.alert('Error', 'Completa todos los campos y obtén la ubicación antes de guardar.');
       return;
     }
 
     try {
       await api.post('/Rutas', {
         id: 0,
-        ubicacion,
+        ubicacion: descripcion,
         fecha,
         latitud,
         longitud,
+        bike: tipoBike,
         eventos: [],
       });
 
-      Alert.alert('Éxito', 'Ruta creada.');
+      Alert.alert('Éxito', 'Ruta creada correctamente.');
       router.replace('/(tabs)/HomeScreen');
     } catch (error) {
       console.error(error);
@@ -47,9 +49,10 @@ export function useCrearRutaViewModel() {
   };
 
   return {
-    ubicacion,
-    setUbicacion,
-    fecha,
+    descripcion,
+    setDescripcion,
+    tipoBike,
+    setTipoBike,
     latitud,
     longitud,
     obtenerUbicacionActual,
